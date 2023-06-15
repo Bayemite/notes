@@ -50,10 +50,10 @@ function keydown(e) {
                 next = '0';
 
             localStorage.setItem('next-id', `${Number(next) + 1}`);
-            location.href = 'notes.html?id=' + next;
+            location.href = 'index.html?id=' + next;
         }
         else if (e.key == 'c' && location.search != '')
-            location.href = 'notes.html';
+            location.href = 'index.html';
     }
 }
 
@@ -67,7 +67,7 @@ function homePage() {
         let metadata = JSON.parse(localStorage.getItem(`note-${i}-metadata`));
         if (metadata === null)
             continue;
-        notesList += `${i}. <a href=notes.html?id=${i}>${metadata.title}</a><br>`;
+        notesList += `${i}. <a href=index.html?id=${i}>${metadata.title}</a><br>`;
     }
     if (nextId > 0)
         notesList += '<br>';
