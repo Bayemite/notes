@@ -4,7 +4,11 @@ let params = new URLSearchParams(document.location.search);
 let id = params.get('id');
 
 if (id === null) { homePage(); }
-else {
+else { notePage(id); }
+
+function notePage(id) {
+    document.body.innerHTML = '<div contenteditable id="content"></div>';
+
     let content = document.getElementById('content');
     content.focus();
 
@@ -50,10 +54,11 @@ function keydown(e) {
                 next = '0';
 
             localStorage.setItem('next-id', `${Number(next) + 1}`);
-            location.href = 'index.html?id=' + next;
+            history.pushState({}, '', `index.html?id=${next}`);
+            notePage(next);
         }
-        else if (e.key == 'c' && location.search != '')
-            location.href = 'index.html';
+        else if (e.key == 'h' && location.search != '')
+            homePage();
     }
 }
 
@@ -72,11 +77,12 @@ function homePage() {
     if (nextId > 0)
         notesList += '<br>';
 
+    document.title = 'Notes';
     document.body.innerHTML = `
         ${notesList}
         Notes are stored in localStorage.<br>
         A note's title is its first line.<br>
-        Alt+C: Move to this page.<br>
+        Alt+H: Move to this page.<br>
         Alt+N: Create a new note.<br>
     `;
 }
