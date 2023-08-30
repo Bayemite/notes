@@ -71,18 +71,24 @@ function homePage() {
     `;
 }
 
+function newNote() {
+    let next = localStorage.getItem('next-id');
+    if (next === null)
+        next = '0';
+
+    localStorage.setItem('next-id', `${Number(next) + 1}`);
+    history.replaceState({}, '', `index.html?id=${next}`);
+    notePage(next);
+}
+
 function keydown(e) {
     if (e.altKey) {
         if (e.key == 'n') {
-            let next = localStorage.getItem('next-id');
-            if (next === null)
-                next = '0';
-
-            localStorage.setItem('next-id', `${Number(next) + 1}`);
-            history.pushState({}, '', `index.html?id=${next}`);
-            notePage(next);
+            newNote();
         }
-        else if (e.key == 'h' && location.search != '')
+        else if (e.key == 'h' && location.search != '') {
+            history.replaceState({}, '', 'index.html');
             homePage();
+        }
     }
 }
