@@ -46,22 +46,6 @@ function notePage(id) {
     }
 }
 
-function keydown(e) {
-    if (e.altKey) {
-        if (e.key == 'n') {
-            let next = localStorage.getItem('next-id');
-            if (next === null)
-                next = '0';
-
-            localStorage.setItem('next-id', `${Number(next) + 1}`);
-            history.pushState({}, '', `index.html?id=${next}`);
-            notePage(next);
-        }
-        else if (e.key == 'h' && location.search != '')
-            homePage();
-    }
-}
-
 function homePage() {
     let nextId = Number(localStorage.getItem('next-id'));
     if (nextId === null)
@@ -85,4 +69,20 @@ function homePage() {
         Alt+H: Move to this page.<br>
         Alt+N: Create a new note.<br>
     `;
+}
+
+function keydown(e) {
+    if (e.altKey) {
+        if (e.key == 'n') {
+            let next = localStorage.getItem('next-id');
+            if (next === null)
+                next = '0';
+
+            localStorage.setItem('next-id', `${Number(next) + 1}`);
+            history.pushState({}, '', `index.html?id=${next}`);
+            notePage(next);
+        }
+        else if (e.key == 'h' && location.search != '')
+            homePage();
+    }
 }
