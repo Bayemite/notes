@@ -1,3 +1,10 @@
+const navbar = `
+<a href='javascript:void(0)' onclick='homePage()'>Home</a>
+&nbsp;|&nbsp;
+<a href='javascript:void(0)' onclick='newNote()'>New</a>
+<br><br>
+`;
+
 window.onkeydown = keydown;
 
 let params = new URLSearchParams(document.location.search);
@@ -9,7 +16,7 @@ else { notePage(id); }
 function notePage(id) {
     history.replaceState({}, '', `index.html?id=${id}`);
 
-    document.body.innerHTML = '<div contenteditable id="content"></div>';
+    document.body.innerHTML = navbar + '<div contenteditable id="content"></div>';
 
     let content = document.getElementById('content');
     content.focus();
@@ -67,11 +74,14 @@ function homePage() {
 
     document.title = 'Notes';
     document.body.innerHTML = `
+        ${navbar}
         ${notesList}
         Notes are stored in localStorage.<br>
         A note's title is its first line.<br>
-        Alt+H: Move to this page.<br>
-        Alt+N: Create a new note.<br>
+        <br>
+        Shortcuts:<br>
+        Home: Alt+H<br>
+        New: Alt+N<br>
     `;
 }
 
