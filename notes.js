@@ -7,6 +7,8 @@ if (id === null) { homePage(); }
 else { notePage(id); }
 
 function notePage(id) {
+    history.replaceState({}, '', `index.html?id=${id}`);
+
     document.body.innerHTML = '<div contenteditable id="content"></div>';
 
     let content = document.getElementById('content');
@@ -47,6 +49,8 @@ function notePage(id) {
 }
 
 function homePage() {
+    history.replaceState({}, '', 'index.html');
+
     let nextId = Number(localStorage.getItem('next-id'));
     if (nextId === null)
         nextId = 0;
@@ -56,7 +60,7 @@ function homePage() {
         let metadata = JSON.parse(localStorage.getItem(`note-${i}-metadata`));
         if (metadata === null)
             continue;
-        notesList += `${i}. <a href=index.html?id=${i}>${metadata.title}</a><br>`;
+        notesList += `${i}. <a href='javascript:void(0)' onclick='notePage(${i})'>${metadata.title}</a><br>`;
     }
     if (nextId > 0)
         notesList += '<br>';
@@ -77,7 +81,6 @@ function newNote() {
         next = '0';
 
     localStorage.setItem('next-id', `${Number(next) + 1}`);
-    history.replaceState({}, '', `index.html?id=${next}`);
     notePage(next);
 }
 
@@ -87,7 +90,6 @@ function keydown(e) {
             newNote();
         }
         else if (e.key == 'h' && location.search != '') {
-            history.replaceState({}, '', 'index.html');
             homePage();
         }
     }
